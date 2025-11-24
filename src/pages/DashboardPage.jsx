@@ -107,7 +107,7 @@ const DashboardPage = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('dashboard.welcome')} {user?.name} 👋</h1>
-          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Here's what's happening with your store today.</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{t('dashboard.subtitle')}</p>
         </div>
         <div className="text-sm text-gray-500 bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
           {new Date().toLocaleDateString(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}

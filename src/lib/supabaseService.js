@@ -170,12 +170,28 @@ export const supabaseService = {
   deletePartner: (id, tenantId) => deleteRecord('partners', id, tenantId),
 
   // Invoices
-  getInvoicesIn: (tenantId) => getByTenant('invoices_in', tenantId, { select: '*, partners(name)' }),
+  getInvoicesIn: async (tenantId) => {
+    if (!tenantId) return [];
+    try {
+      return await getByTenant('invoices_in', tenantId);
+    } catch (error) {
+      console.error('getInvoicesIn error:', error);
+      return [];
+    }
+  },
   createInvoiceIn: (data, tenantId) => createRecord('invoices_in', data, tenantId),
   updateInvoiceIn: (id, data, tenantId) => updateRecord('invoices_in', id, data, tenantId),
   deleteInvoiceIn: (id, tenantId) => deleteRecord('invoices_in', id, tenantId),
 
-  getInvoicesOut: (tenantId) => getByTenant('invoices_out', tenantId, { select: '*, partners(name)' }),
+  getInvoicesOut: async (tenantId) => {
+    if (!tenantId) return [];
+    try {
+      return await getByTenant('invoices_out', tenantId);
+    } catch (error) {
+      console.error('getInvoicesOut error:', error);
+      return [];
+    }
+  },
   createInvoiceOut: (data, tenantId) => createRecord('invoices_out', data, tenantId),
   updateInvoiceOut: (id, data, tenantId) => updateRecord('invoices_out', id, data, tenantId),
   deleteInvoiceOut: (id, tenantId) => deleteRecord('invoices_out', id, tenantId),

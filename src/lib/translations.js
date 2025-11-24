@@ -204,7 +204,8 @@ export const translations = {
       recentActivity: "النشاطات الأخيرة",
       financialOverview: "نظرة عامة مالية",
       transactionVolume: "حجم المعاملات",
-      systemName: "نظام إبراهيم للمحاسبة"
+      systemName: "نظام إبراهيم للمحاسبة",
+      subtitle: "إليك ما يحدث في متجرك اليوم"
     },
     auth: {
       loginTitle: "تسجيل الدخول",
