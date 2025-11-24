@@ -46,12 +46,15 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       </div>
 
       <nav className="flex-1 px-4 overflow-y-auto h-[calc(100vh-80px)]">
+        {/* Admin Panel - فقط للمشرفين */}
         {user?.isSuperAdmin && (
           <>
-             <div className="px-4 mb-2 text-xs font-semibold text-purple-500 uppercase tracking-wider">{t('common.adminPanel')}</div>
+             <div className="px-4 mb-2 mt-4 text-xs font-semibold text-purple-500 dark:text-purple-400 uppercase tracking-wider">
+               {t('common.adminPanel')}
+             </div>
              <Link to="/admin" className={navItemClass('/admin')} onClick={handleLinkClick}>
-                <Shield className="h-5 w-5 ltr:mr-3 rtl:ml-3" />
-                {t('common.adminPanel')}
+                <Shield className="h-5 w-5 ltr:mr-3 rtl:ml-3 text-purple-500 dark:text-purple-400" />
+                <span className="font-medium">{t('common.adminPanel')}</span>
              </Link>
           </>
         )}

@@ -47,11 +47,15 @@ export const AuthProvider = ({ children }) => {
       }
 
       if (profile) {
+        // Check if user is super admin - support multiple admin emails
+        const adminEmails = ['systemibrahem@gmail.com', 'admin@ibrahim.com'];
+        const isSuperAdmin = adminEmails.includes(profile.email?.toLowerCase()) || profile.role === ROLES.SUPER_ADMIN;
+        
         const userData = {
           ...sessionUser,
           ...profile,
           id: sessionUser.id, // Ensure ID consistency
-          isSuperAdmin: profile.email === 'systemibrahem@gmail.com',
+          isSuperAdmin: isSuperAdmin,
           isStoreOwner: profile.role === ROLES.STORE_OWNER,
         };
 
@@ -84,7 +88,8 @@ export const AuthProvider = ({ children }) => {
         setTenant(tenantInfo);
       } else {
         // Fallback for super admin initial seed scenario if profile missing
-        if (sessionUser.email === 'systemibrahem@gmail.com') {
+        const adminEmails = ['systemibrahem@gmail.com', 'admin@ibrahim.com'];
+        if (adminEmails.includes(sessionUser.email?.toLowerCase())) {
            setUser({ ...sessionUser, role: ROLES.SUPER_ADMIN, isSuperAdmin: true });
         } else {
            setUser(sessionUser);

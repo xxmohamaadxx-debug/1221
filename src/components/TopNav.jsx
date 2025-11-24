@@ -1,7 +1,8 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { Bell, Search, User, Menu } from 'lucide-react';
+import { Bell, Search, User, Menu, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -30,6 +31,15 @@ const TopNav = ({ onMenuClick }) => {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
+        {user?.isSuperAdmin && (
+          <Link to="/admin">
+            <Button variant="outline" size="sm" className="gap-2 border-purple-500 text-purple-600 hover:bg-purple-50 dark:border-purple-400 dark:text-purple-400 dark:hover:bg-purple-900/20">
+              <Shield className="h-4 w-4" />
+              <span className="hidden sm:inline">{t('common.adminPanel')}</span>
+            </Button>
+          </Link>
+        )}
+        
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5 text-gray-500" />
           <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white"></span>

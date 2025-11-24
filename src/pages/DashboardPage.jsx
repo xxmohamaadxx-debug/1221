@@ -81,10 +81,14 @@ const DashboardPage = () => {
       }
     };
     
-    // Add small delay to prevent blocking UI
-    const timeoutId = setTimeout(loadStats, 100);
-    return () => clearTimeout(timeoutId);
-  }, [user?.tenant_id]);
+    // Load stats immediately for super admin, with delay for others to prevent blocking
+    if (user?.isSuperAdmin) {
+      loadStats();
+    } else {
+      const timeoutId = setTimeout(loadStats, 50);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [user?.tenant_id, user?.isSuperAdmin]);
 
   const chartData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
