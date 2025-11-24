@@ -171,10 +171,18 @@ export const AuthProvider = ({ children }) => {
           created_by: authData.user.id
       });
 
-      toast({ title: 'Account Created!', description: 'Welcome to Ibrahim Accounting System.' });
+      toast({ 
+        title: 'تم إنشاء الحساب بنجاح!', 
+        description: 'مرحباً بك في نظام إبراهيم للمحاسبة. جاري تسجيل الدخول...' 
+      });
       return authData;
     } catch (error) {
-      toast({ title: 'Registration Failed', description: error.message, variant: 'destructive' });
+      console.error('Registration error:', error);
+      toast({ 
+        title: 'فشل التسجيل', 
+        description: error.message || 'حدث خطأ أثناء إنشاء الحساب. يرجى المحاولة مرة أخرى.', 
+        variant: 'destructive' 
+      });
       throw error;
     }
   };

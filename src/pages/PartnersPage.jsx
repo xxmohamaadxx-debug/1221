@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { supabaseService } from '@/lib/supabaseService';
 import { Button } from '@/components/ui/button';
 import { Plus, Loader2 } from 'lucide-react';
@@ -11,6 +12,7 @@ import PartnerTable from '@/components/partners/PartnerTable';
 
 const PartnersPage = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -40,14 +42,14 @@ const PartnersPage = () => {
       }
       setDialogOpen(false);
       loadData();
-      toast({ title: "Partner saved" });
+      toast({ title: t('partners.saved') });
     } catch (e) {
-      toast({ title: "Error saving partner", variant: "destructive" });
+      toast({ title: t('partners.error'), variant: "destructive" });
     }
   };
 
   const handleDelete = async (id) => {
-    if(!window.confirm("Delete partner?")) return;
+    if(!window.confirm(t('partners.confirmDelete'))) return;
     try {
       await supabaseService.deletePartner(id, user.tenant_id);
       loadData();
@@ -56,11 +58,11 @@ const PartnersPage = () => {
 
   return (
     <div className="space-y-6">
-      <Helmet><title>Partners</title></Helmet>
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Partners</h1>
-        <Button onClick={() => { setSelected(null); setDialogOpen(true); }} className="bg-gradient-to-r from-orange-500 to-pink-500 text-white">
-          <Plus className="mr-2 h-4 w-4" /> Add Partner
+      <Helmet><title>{t('common.partners')} - {t('common.systemName')}</title></Helmet>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">{t('common.partners')}</h1>
+        <Button onClick={() => { setSelected(null); setDialogOpen(true); }} className="bg-gradient-to-r from-orange-500 to-pink-500 text-white w-full sm:w-auto">
+          <Plus className="h-4 w-4 ml-2 rtl:mr-2 rtl:ml-0" /> {t('partners.addPartner')}
         </Button>
       </div>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">

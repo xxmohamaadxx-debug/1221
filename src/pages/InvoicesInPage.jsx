@@ -5,8 +5,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { supabaseService } from '@/lib/supabaseService';
 import { Button } from '@/components/ui/button';
-import { Plus, Loader2 } from 'lucide-react';
+import { Plus, Loader2, Edit, Trash2 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
+import InvoiceDialog from '@/components/invoices/InvoiceDialog';
 
 const InvoicesInPage = () => {
   const { user } = useAuth();
@@ -50,7 +51,7 @@ const InvoicesInPage = () => {
       <Helmet><title>{t('common.invoicesIn')}</title></Helmet>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">{t('common.invoicesIn')}</h1>
-        <Button onClick={handleCreateTest} className="bg-gradient-to-r from-orange-500 to-pink-500 text-white w-full sm:w-auto">
+        <Button onClick={handleCreate} className="bg-gradient-to-r from-orange-500 to-pink-500 text-white w-full sm:w-auto">
           <Plus className="h-4 w-4 ltr:mr-2 rtl:ml-2" /> {t('common.add')}
         </Button>
       </div>
@@ -80,17 +81,40 @@ const InvoicesInPage = () => {
                     <tr className="border-b dark:border-gray-700">
                       <th className="p-4 text-sm font-semibold">{t('common.date')}</th>
                       <th className="p-4 text-sm font-semibold">{t('common.description')}</th>
+                      <th className="p-4 text-sm font-semibold">{t('common.category')}</th>
                       <th className="p-4 text-sm font-semibold">{t('common.amount')}</th>
-                      <th className="p-4 text-sm font-semibold">{t('common.status')}</th>
+                      <th className="p-4 text-sm font-semibold">{t('common.currency')}</th>
+                      <th className="p-4 text-sm font-semibold">{t('common.actions')}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                     {invoices.map(inv => (
                       <tr key={inv.id} className="hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
-                        <td className="p-4 text-sm">{new Date(inv.date).toLocaleDateString()}</td>
-                        <td className="p-4 text-sm">{inv.description}</td>
-                        <td className="p-4 text-sm font-bold text-red-500">{inv.amount} {inv.currency}</td>
-                        <td className="p-4"><span className="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700">{inv.status}</span></td>
+                        <td className="p-4 text-sm">{inv.date ? new Date(inv.date).toLocaleDateString('ar-SA') : '-'}</td>
+                        <td className="p-4 text-sm">{inv.description || '-'}</td>
+                        <td className="p-4 text-sm">{inv.category || '-'}</td>
+                        <td className="p-4 text-sm font-bold text-red-500">{inv.amount || 0}</td>
+                        <td className="p-4 text-sm">{inv.currency || 'TRY'}</td>
+                        <td className="p-4">
+                          <div className="flex gap-2">
+                            <Button size="sm" variant="ghost" onClick={() => handleEdit(inv)}>
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button size="sm" variant="ghost" onClick={async () => {
+                              if (window.confirm(t('common.confirmDelete'))) {
+                                try {
+                                  await supabaseService.deleteInvoiceIn(inv.id, user.tenant_id);
+                                  toast({ title: t('common.success') });
+                                  loadInvoices();
+                                } catch (error) {
+                                  toast({ title: t('common.error'), variant: "destructive" });
+                                }
+                              }
+                            }}>
+                              <Trash2 className="h-4 w-4 text-red-500" />
+                            </Button>
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -100,6 +124,13 @@ const InvoicesInPage = () => {
           )
         )}
       </div>
+      <InvoiceDialog 
+        open={dialogOpen} 
+        onOpenChange={setDialogOpen} 
+        invoice={selectedInvoice}
+        onSave={handleSave}
+        type="in"
+      />
     </div>
   );
 };

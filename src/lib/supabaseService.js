@@ -7,7 +7,7 @@ import { supabase } from '@/lib/customSupabaseClient';
  * @param {string} tenantId - Tenant ID to filter by
  * @param {Object} [options] - select string, etc.
  */
-const   getByTenant = async (table, tenantId, { select = '*', orderBy = { column: 'created_at', ascending: false } } = {}) => {
+const getByTenant = async (table, tenantId, { select = '*', orderBy = { column: 'created_at', ascending: false } } = {}) => {
   if (!tenantId) {
     console.warn(`getByTenant: No tenantId provided for table ${table}`);
     return [];

@@ -277,6 +277,17 @@ export const translations = {
         createStoreNote: "لإنشاء متجر جديد، يرجى تسجيل الخروج واستخدام صفحة التسجيل، أو تنفيذ Edge Function لإنشاء المستخدمين من قبل المدير.",
         accessDenied: "الوصول مرفوض. المشرف العام فقط."
       }
+    },
+    partners: {
+      partner: "شريك",
+      addPartner: "إضافة شريك",
+      customer: "عميل",
+      vendor: "مورد",
+      type: "النوع",
+      address: "العنوان",
+      saved: "تم حفظ الشريك بنجاح",
+      error: "خطأ في حفظ الشريك",
+      confirmDelete: "هل أنت متأكد من حذف هذا الشريك؟"
     }
   },
   tr: {

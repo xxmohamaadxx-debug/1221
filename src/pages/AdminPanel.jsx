@@ -32,17 +32,26 @@ const AdminPanel = () => {
 
   const fetchStores = async () => {
     try {
-      // First get all tenants
+      // First get all tenants - بدون order لمنع خطأ 500
       const { data: tenantsData, error: tenantsError } = await supabase
         .from('tenants')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .select('*');
         
-      if (tenantsError) throw tenantsError;
+      if (tenantsError) {
+        console.error('Tenants fetch error:', tenantsError);
+        throw tenantsError;
+      }
+      
+      // Sort locally instead of in query
+      const sortedTenants = (tenantsData || []).sort((a, b) => {
+        const dateA = new Date(a.created_at || 0);
+        const dateB = new Date(b.created_at || 0);
+        return dateB - dateA;
+      });
       
       // Then get owner info for each tenant
       const storesWithOwners = await Promise.all(
-        (tenantsData || []).map(async (tenant) => {
+        sortedTenants.map(async (tenant) => {
           if (tenant.owner_user_id) {
             try {
               const { data: ownerData } = await supabase

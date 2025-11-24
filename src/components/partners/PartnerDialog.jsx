@@ -47,56 +47,60 @@ const PartnerDialog = ({ open, onOpenChange, partner, onSave }) => {
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>
-            {partner ? t('common.edit') : t('common.add')} Partner
+            {partner ? t('common.edit') : t('common.add')} {t('partners.partner')}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
+            <label className="block text-sm font-medium mb-1 rtl:text-right">{t('common.name')}</label>
             <input
               type="text"
               required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-100"
+              placeholder={t('common.name')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Type</label>
+            <label className="block text-sm font-medium mb-1 rtl:text-right">{t('partners.type')}</label>
             <select
               value={formData.type}
               onChange={(e) => setFormData({ ...formData, type: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-100"
             >
-              <option value="Customer">Customer</option>
-              <option value="Vendor">Vendor</option>
+              <option value="Customer">{t('partners.customer')}</option>
+              <option value="Vendor">{t('partners.vendor')}</option>
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Phone</label>
+            <label className="block text-sm font-medium mb-1 rtl:text-right">{t('common.phone')}</label>
             <input
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-100"
+              placeholder={t('common.phone')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
+            <label className="block text-sm font-medium mb-1 rtl:text-right">{t('common.email')}</label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-100"
+              placeholder={t('common.email')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Address</label>
+            <label className="block text-sm font-medium mb-1 rtl:text-right">{t('partners.address')}</label>
             <textarea
               value={formData.address}
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-100"
               rows="2"
+              placeholder={t('partners.address')}
             />
           </div>
 

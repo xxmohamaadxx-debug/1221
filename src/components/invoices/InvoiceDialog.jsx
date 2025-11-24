@@ -44,7 +44,7 @@ const InvoiceDialog = ({ open, onOpenChange, invoice, onSave, type }) => {
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>
-            {invoice ? t('common.edit') : t('common.add')} {type === 'in' ? 'Invoice In' : 'Invoice Out'}
+            {invoice ? t('common.edit') : t('common.add')} {type === 'in' ? t('common.invoicesIn') : t('common.invoicesOut')}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -71,9 +71,9 @@ const InvoiceDialog = ({ open, onOpenChange, invoice, onSave, type }) => {
               onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-100"
             >
-              <option value="TRY">TRY (₺)</option>
-              <option value="USD">USD ($)</option>
-              <option value="SYP">SYP (£S)</option>
+              <option value="TRY">₺ ليرة تركية (TRY)</option>
+              <option value="USD">$ دولار أمريكي (USD)</option>
+              <option value="SYP">£S ليرة سورية (SYP)</option>
             </select>
           </div>
 
