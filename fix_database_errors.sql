@@ -112,14 +112,23 @@ ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW();
 CREATE INDEX IF NOT EXISTS idx_audit_logs_tenant_id ON audit_logs(tenant_id);
 CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at DESC);
 
--- 11. تعطيل RLS مؤقتاً لحل مشاكل الوصول (يمكن تفعيله لاحقاً بعد التأكد من أن كل شيء يعمل)
--- ALTER TABLE tenants ENABLE ROW LEVEL SECURITY;
--- ALTER TABLE public_users ENABLE ROW LEVEL SECURITY;
--- ALTER TABLE invoices_in ENABLE ROW LEVEL SECURITY;
--- ALTER TABLE invoices_out ENABLE ROW LEVEL SECURITY;
--- ALTER TABLE partners ENABLE ROW LEVEL SECURITY;
--- ALTER TABLE inventory_items ENABLE ROW LEVEL SECURITY;
--- ALTER TABLE employees ENABLE ROW LEVEL SECURITY;
+-- 11. حذف جميع RLS Policies القديمة التي تسبب infinite recursion
+DROP POLICY IF EXISTS "Super admin can view all tenants" ON tenants;
+DROP POLICY IF EXISTS "Users can view their tenant users" ON public_users;
+DROP POLICY IF EXISTS "Users can view their tenant invoices_in" ON invoices_in;
+DROP POLICY IF EXISTS "Users can insert their tenant invoices_in" ON invoices_in;
+DROP POLICY IF EXISTS "Users can update their tenant invoices_in" ON invoices_in;
+DROP POLICY IF EXISTS "Users can delete their tenant invoices_in" ON invoices_in;
+DROP POLICY IF EXISTS "Users can view their tenant invoices_out" ON invoices_out;
+DROP POLICY IF EXISTS "Users can insert their tenant invoices_out" ON invoices_out;
+DROP POLICY IF EXISTS "Users can update their tenant invoices_out" ON invoices_out;
+DROP POLICY IF EXISTS "Users can delete their tenant invoices_out" ON invoices_out;
+DROP POLICY IF EXISTS "Users can view their tenant partners" ON partners;
+DROP POLICY IF EXISTS "Users can manage their tenant partners" ON partners;
+DROP POLICY IF EXISTS "Users can view their tenant inventory" ON inventory_items;
+DROP POLICY IF EXISTS "Users can manage their tenant inventory" ON inventory_items;
+DROP POLICY IF EXISTS "Users can view their tenant employees" ON employees;
+DROP POLICY IF EXISTS "Users can manage their tenant employees" ON employees;
 
 -- تعطيل RLS مؤقتاً لحل مشاكل الوصول
 ALTER TABLE tenants DISABLE ROW LEVEL SECURITY;
@@ -129,9 +138,6 @@ ALTER TABLE invoices_out DISABLE ROW LEVEL SECURITY;
 ALTER TABLE partners DISABLE ROW LEVEL SECURITY;
 ALTER TABLE inventory_items DISABLE ROW LEVEL SECURITY;
 ALTER TABLE employees DISABLE ROW LEVEL SECURITY;
-
--- RLS Policies معطلة مؤقتاً لحل مشاكل الوصول
--- يمكن تفعيلها لاحقاً بعد التأكد من أن كل شيء يعمل بشكل صحيح
 
 -- 12. تحديث updated_at تلقائياً
 CREATE OR REPLACE FUNCTION update_updated_at_column()

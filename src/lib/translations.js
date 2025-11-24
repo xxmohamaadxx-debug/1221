@@ -288,6 +288,24 @@ export const translations = {
       saved: "تم حفظ الشريك بنجاح",
       error: "خطأ في حفظ الشريك",
       confirmDelete: "هل أنت متأكد من حذف هذا الشريك؟"
+    },
+    employees: {
+      employee: "موظف",
+      addEmployee: "إضافة موظف",
+      fullName: "الاسم الكامل",
+      position: "المنصب",
+      salary: "الراتب",
+      baseSalary: "الراتب الأساسي",
+      hireDate: "تاريخ التعيين",
+      status: "الحالة",
+      active: "نشط",
+      inactive: "غير نشط"
+    },
+    users: {
+      user: "مستخدم",
+      addUser: "إضافة مستخدم",
+      password: "كلمة المرور",
+      confirmPassword: "تأكيد كلمة المرور"
     }
   },
   tr: {

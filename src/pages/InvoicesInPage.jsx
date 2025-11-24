@@ -50,20 +50,9 @@ const InvoicesInPage = () => {
     }
   };
 
-  const handleCreateTest = async () => {
-    try {
-      await supabaseService.createInvoiceIn({
-        amount: 100,
-        currency: 'USD',
-        description: 'Test Expense',
-        date: new Date().toISOString(),
-        status: 'Paid'
-      }, user.tenant_id);
-      toast({ title: t('common.success') });
-      loadInvoices();
-    } catch (error) {
-      toast({ title: t('common.error'), variant: "destructive" });
-    }
+  const handleCreate = () => {
+    setSelectedInvoice(null);
+    setDialogOpen(true);
   };
 
   return (
