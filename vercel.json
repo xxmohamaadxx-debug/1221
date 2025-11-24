@@ -3,14 +3,9 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "installCommand": "npm ci",
-  "functions": {
-    "app/**": {
-      "memory": 1024
-    }
-  },
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/assets/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -19,7 +14,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(js|css|woff2|png|jpg|jpeg|svg|ico))",
+      "source": "/(.*\\.(js|css|woff2|png|jpg|jpeg|svg|ico|gif|webp))",
       "headers": [
         {
           "key": "Cache-Control",
